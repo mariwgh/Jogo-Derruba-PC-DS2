@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="estilo.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo</title>
+</head>
+
+<body>
+    <h1>Derruba PC</h1>
+    
+    <table>
+        <tr>
+            <!-- imagem que ao clicar reproduz o som -->
+            <td><img src="https://thumbs.dreamstime.com/b/som-no-%C3%ADcone-do-esbo%C3%A7o-ilustra-o-vetor-orador-linha-ilustra%C3%A7%C3%A3o-153214965.jpg" alt="Som" class="clickable-img" onclick="tocarSom()"></td>
+            <td></td>
+            <td>Tempo: <span id="timerRestante">60</span></td>
+            <td></td>
+            <td>Pontuação: <span id="pontuacao"></span></td>
+            <td></td>
+            <td>Nível: <span id="nivel"></span></td>
+            <td></td>
+        </tr>
+    </table>
+    
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <p>Clique no símbolo para reproduzir a trilha sonora!</p>
+    <p>Você ganhara se capturar 15 ou mais peças antes do tempo acabar! </p>
+    <p>(Lembre-se que a velocidade vai aumentando...)</p>   
+    
+    <audio id="myAudio" preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
