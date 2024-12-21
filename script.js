@@ -10,7 +10,6 @@ function tocarSom() {
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
-let isTouching = false; // Flag para verificar se está tocando
 
 const imagemCPU = 'cpu.png';
 const imagemMemoriaRAM = 'memoria-ram.png';
@@ -305,6 +304,7 @@ function resetGame() {
 }
 
 
+let isTouching = false; // Flag para verificar se está tocando
 
 // Capturar evento de início de toque
 canvas.addEventListener("touchstart", (e) => {
@@ -342,6 +342,12 @@ canvas.addEventListener("touchmove", (e) => {
 });
 
 
+// Capturar fim do toque
+canvas.addEventListener("touchend", () => {
+    isTouching = false;
+});
+
+
 function lidarComTeclaApertada(e) {
     if (e.key === "d" || e.key === "D" || e.key === "ArrowRight") {
         barra.velocity.x = 3 * armaMultiplier;
@@ -370,11 +376,6 @@ function lidarComTeclaSolta(e) {
         barra.velocity.x = 0;
     }
 }
-
-// Capturar fim do toque
-canvas.addEventListener("touchend", () => {
-    isTouching = false;
-});
 
 
 let timerRestante = 60;
