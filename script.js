@@ -10,6 +10,7 @@ function tocarSom() {
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
+let isTouching = false; // Flag para verificar se está tocando
 
 const imagemCPU = 'cpu.png';
 const imagemMemoriaRAM = 'memoria-ram.png';
@@ -254,48 +255,6 @@ function loop() {
     }
 }
 
-let isTouching = false; // Flag para verificar se está tocando
-
-// Capturar evento de início de toque
-canvas.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    const touch = e.touches[0];
-    const touchX = touch.clientX - canvas.offsetLeft;
-
-    // Verifica se o toque começou próximo da barra
-    if (
-        touchX >= barra.position.x &&
-        touchX <= barra.position.x + barra.dimensions.width
-    ) {
-        isTouching = true;
-    }
-});
-
-// Capturar movimento do toque
-canvas.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-    if (isTouching) {
-        const touch = e.touches[0];
-        const touchX = touch.clientX - canvas.offsetLeft;
-
-        // Atualiza a posição da barra com base no movimento do toque
-        barra.position.x = touchX - barra.dimensions.width / 2;
-
-        // Garantir que a barra fique dentro dos limites do canvas
-        if (barra.position.x < 0) {
-            barra.position.x = 0;
-        }
-        if (barra.position.x + barra.dimensions.width > canvas.width) {
-            barra.position.x = canvas.width - barra.dimensions.width;
-        }
-    }
-});
-
-// Capturar fim do toque
-canvas.addEventListener("touchend", () => {
-    isTouching = false;
-});
-
 
 function update() {
     atirarAuto();
@@ -345,6 +304,44 @@ function resetGame() {
     loop();
 }
 
+
+
+// Capturar evento de início de toque
+canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const touchX = touch.clientX - canvas.offsetLeft;
+
+    // Verifica se o toque começou próximo da barra
+    if (
+        touchX >= barra.position.x &&
+        touchX <= barra.position.x + barra.dimensions.width
+    ) {
+        isTouching = true;
+    }
+});
+
+// Capturar movimento do toque
+canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    if (isTouching) {
+        const touch = e.touches[0];
+        const touchX = touch.clientX - canvas.offsetLeft;
+
+        // Atualiza a posição da barra com base no movimento do toque
+        barra.position.x = touchX - barra.dimensions.width / 2;
+
+        // Garantir que a barra fique dentro dos limites do canvas
+        if (barra.position.x < 0) {
+            barra.position.x = 0;
+        }
+        if (barra.position.x + barra.dimensions.width > canvas.width) {
+            barra.position.x = canvas.width - barra.dimensions.width;
+        }
+    }
+});
+
+
 function lidarComTeclaApertada(e) {
     if (e.key === "d" || e.key === "D" || e.key === "ArrowRight") {
         barra.velocity.x = 3 * armaMultiplier;
@@ -373,6 +370,11 @@ function lidarComTeclaSolta(e) {
         barra.velocity.x = 0;
     }
 }
+
+// Capturar fim do toque
+canvas.addEventListener("touchend", () => {
+    isTouching = false;
+});
 
 
 let timerRestante = 60;
